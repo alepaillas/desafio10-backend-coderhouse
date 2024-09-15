@@ -55,11 +55,11 @@ const update = async (id, data) => {
 
 const deleteOne = async (id, user) => {
   const productData = await productsRepository.getById(id);
-  if (user.role === "premium" && product.owner !== user._id) {
+  if (user.role === "premium" && productData.owner !== user._id) {
     throw customErrors.unauthorizedError("User not authorized");
   }
   const deleted = await productsRepository.deleteOne(id);
-  if (!deleted.deletedCount)
+  if (!deleted)
     throw customErrors.notFoundError(`Product with id: ${id} not found.`);
   return { message: `Product with id: ${id} successfully deleted.` };
 };
