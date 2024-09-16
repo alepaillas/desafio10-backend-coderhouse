@@ -27,7 +27,7 @@ router.get(
 router.post(
   "/",
   passportCall("jwt"),
-  authorization("admin"),
+  authorization(["user", "premium"]),
   cartsControllers.create,
 );
 

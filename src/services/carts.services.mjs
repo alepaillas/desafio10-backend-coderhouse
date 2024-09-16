@@ -70,20 +70,20 @@ const handleCartStock = async (cid, removeOutOfStock = false) => {
   if (!cart)
     throw customErrors.notFoundError(`Cart with id: ${cid} not found.`);
 
-  const productsNotinStock = [];
+  const productsNotInStock = [];
 
   // Check product stock and identify out-of-stock products
   for (const i of cart.products) {
     const stock = i.product.stock;
     if (stock < i.quantity) {
-      productsNotinStock.push(i.product);
+      productsNotInStock.push(i.product);
     }
   }
 
   let updatedCart = null;
-  if (removeOutOfStock && productsNotinStock.length > 0) {
+  if (removeOutOfStock && productsNotInStock.length > 0) {
     // Remove out-of-stock products from the cart
-    const productIdsToRemove = productsNotinStock.map((product) =>
+    const productIdsToRemove = productsNotInStock.map((product) =>
       product._id.toString(),
     );
     updatedCart = await cartsRepository.deleteProducts(cid, productIdsToRemove);
@@ -94,7 +94,7 @@ const handleCartStock = async (cid, removeOutOfStock = false) => {
   }
 
   return {
-    productsNotinStock,
+    productsNotInStock,
     updatedCart: updatedCart || cart,
   };
 };

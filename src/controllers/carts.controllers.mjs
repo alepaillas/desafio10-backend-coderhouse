@@ -76,7 +76,7 @@ const updateProductQuantity = async (req, res, next) => {
       pid,
       newQuantity,
     );
-    res.status(200).json({ status: "success", payload: updatedCart });
+    res.status(201).json({ status: "success", payload: updatedCart });
   } catch (error) {
     next(error);
   }
@@ -105,7 +105,7 @@ const purchaseCart = async (req, res, next) => {
     const cart = await cartsServices.getById(cid);
 
     // Check product stock and optionally remove out-of-stock items
-    const { productsNotinStock, updatedCart } =
+    const { productsNotInStock, updatedCart } =
       await cartsServices.handleCartStock(cid, removeOutOfStock);
 
     // Check for an empty cart after potential removal
@@ -151,7 +151,7 @@ const purchaseCart = async (req, res, next) => {
       status: "success",
       payload: ticket,
       updatedCart,
-      productsNotinStock,
+      productsNotInStock,
     });
   } catch (error) {
     next(error);
